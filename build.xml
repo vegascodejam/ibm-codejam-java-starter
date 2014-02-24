@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="build" name="codeRallyClient">
+    <property environment="env"/>
+    <property name="srcDir" value="."/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.5"/>
+    <property name="source" value="1.5"/>
+    <path id="classpathDir">
+        <pathelement location="bin"/>
+    	<pathelement location="WebContent/WEB-INF/lib/wsogclient.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/javax.servlet_3.0.0.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/JSON4J.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/slf4j-api-1.7.6.jar"/>
+        <pathelement location="WebContent/WEB-INF/lib/slf4j-simple-1.7.6.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/coderally-lib.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/commons-lang-2.6.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/commons-math3-3.0.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/jackson-annotations-2.0.6.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/jackson-core-2.0.6.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/jackson-databind-2.0.6.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/jackson-datatype-json-org-2.0.2.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/javax.servlet_3.0.0.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/jbox2d-library-2.1.2.2-javadoc.jar"/>
+	<pathelement location="WebContent/WEB-INF/lib/jbox2d-library-2.1.2.2-modified.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+        <delete file="codeRallyClient.war"/>
+    </target>
+    <target name="build" depends="build-project,build-war"/>
+    <target name="cleanall" depends="clean"/>
+    <target name="build-project" depends="clean,init">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}"
+		includeantruntime="false">
+            <src path="src"/>
+            <classpath refid="classpathDir"/>
+        </javac>
+    </target>
+ 
+   <target name="build-war" depends="build-project">
+	  <war destfile="codeRallyClient.war" webxml="WebContent/WEB-INF/web.xml">
+	  	<webinf dir="WebContent/WEB-INF">
+	  		<include name="resources"/>
+			<include name="ibm-web-ext.xml"/>
+	    </webinf>
+	  	<fileset dir="WebContent">
+			<include name="index.html"/>
+			<include name="server.xml"/>
+			<include name="css/sample.css"/>
+			<include name="css/serviceSpec.css"/>
+			<include name="stylesheets/bootstrap.min.css"/>
+			<include name="loading.gif"/>
+			<include name="javascripts/bootstrap.min.js"/>
+	    </fileset>
+	  	<lib dir="WebContent/WEB-INF/lib">
+			<exclude name="wsogclient.jar"/>
+			<exclude name="javax.servlet_3.0.0.jar"/>
+		</lib>
+		<classes dir="bin"/>
+	  </war>
+   </target>
+
+</project>

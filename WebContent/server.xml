@@ -1,0 +1,29 @@
+<server description="new server">
+
+    <!-- Enable features -->
+    <featureManager>
+        <feature>eXtremeScale.client-1.1</feature>
+        <feature>webProfile-6.0</feature>
+        <feature>jaxrs-1.1</feature>
+    </featureManager>
+
+    <!-- The following items for the cloud server configuration by default. -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  host="*"
+                  httpPort="${port}"
+                   />
+
+    <icap_appstate appName="myapp" markerPath="${home}/.liberty.state" />
+       
+        <application name="myapp" context-root="/" location="../../../../../"
+        type="war" >
+          
+        </application>
+        
+    <logging logDirectory="../../../../../logs"/>     
+        
+    <include location="runtime-vars.xml" />
+    
+    <httpDispatcher enableWelcomePage="false"/>
+		   
+</server>
